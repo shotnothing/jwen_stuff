@@ -3,10 +3,10 @@ import { useState, useEffect, useRef } from "react"
 import confetti from "canvas-confetti"
 
 const config = {
-    period: 5000,
+    period: 6000,
     steps: 500,
     epsilon: 0.5,
-    periodMultiplier: 0.8,
+    periodMultiplier: 0.7,
 }
 
 function useAnimator(setCursorState: (cursorState: number) => void, shouldStop: boolean, cutNumber: number) {
@@ -73,8 +73,8 @@ function useAnimator(setCursorState: (cursorState: number) => void, shouldStop: 
 }
 
 export const Bread = ({ breadState, cutNumber }: { breadState: [number, number]; cutNumber: number }) => {
-    const maxCutNumber = 6;
-    const intensity = Math.min(cutNumber / maxCutNumber, 1) * 0.5 * (cutNumber > 2 ? 1 : 0);
+    const maxCutNumber = 5;
+    const intensity = Math.min(cutNumber / maxCutNumber, 1) * 0.5;
     
     const r = Math.floor(209 * (1 - intensity));
     const g = Math.floor(162 * (1 - intensity));
@@ -156,8 +156,8 @@ export const Cursor = ({
     percentage: number;
     cutNumber: number;
 }) => {
-    const maxCutNumber = 5;
-    const intensity = Math.min(cutNumber / maxCutNumber, 1)  * (cutNumber > 2 ? 1 : 0);
+    const maxCutNumber = 4;
+    const intensity = Math.min(cutNumber / maxCutNumber, 1);
 
     const glowSize = intensity * 25;
     const glowOpacity = intensity * 0.9;
@@ -271,6 +271,20 @@ export default function SlicingHard() {
         setCutNumber(0)
     }
 
+    const cutMap = (cutNumber: number) => {
+        if (cutNumber <= 3) {
+            return "💩 Generational aura debt."
+        } else if (cutNumber <= 4) {
+            return "🤓☝️ Go back to easy mode where you belong."
+        } else if (cutNumber <= 5) {
+            return "👲 U make the asian dad proud. But can do better!"
+        } else if (cutNumber <= 6) {
+            return "👁️👄👁️ wow okay err what"
+        } else {
+            return "🧙‍♂️ How did you even get here??"
+        }
+    }
+
     return (
         <div className="flex flex-col items-center justify-center min-h-screen">
         <div
@@ -281,7 +295,9 @@ export default function SlicingHard() {
                 <p className="text-md font-bold text-red-500">Hard Mode</p>
                 <h1 className="text-2xl font-bold">
                     {status === "playing" && `Cut number ${cutNumber}`}
-                    {status === "lost" && <span className="text-black-500">You lost!</span>}
+                    {status === "lost" && <span className="text-black-500">
+                        You have managed {cutNumber} cuts. {cutMap(cutNumber)}
+                    </span>}
                     {status === "won" && <span className="text-green-500">You won!</span>}
                 </h1>
             </div>

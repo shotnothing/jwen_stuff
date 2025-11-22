@@ -1,6 +1,7 @@
 import { Button } from "@/components/retroui/Button";
 import { useState, useEffect, useRef } from "react"
 import confetti from "canvas-confetti"
+import { useNavigate } from "react-router-dom"
 
 const config = {
     period: 3000, // 3 seconds
@@ -169,6 +170,7 @@ export function CutBread(breadState: [number, number], percentage: number): { st
 }
 
 export default function Slicing() {
+    const navigate = useNavigate()
     const [cursorState, setCursorState] = useState(0)
     const [breadState, setBreadState] = useState<[number, number]>([0, 100])
     const [status, setStatus] = useState<"playing" | "lost" | "won">("playing")
@@ -262,6 +264,9 @@ export default function Slicing() {
                 </p> :
                 <Button
                     className="bg-red-500 text-white hover:bg-red-600"
+                    onClick={() => {
+                        navigate("/hard")
+                    }}
                 >
                     Too Easy?
                 </Button>
