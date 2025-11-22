@@ -1,9 +1,9 @@
-import Slicing from "./apps/slicing/slicing"
+import SlicingHard from "./apps/slicing/slicing-hard"
 
 function App() {
   return (
     <>
-    <Slicing />
+    <SlicingHard />
     </>
   )
 }
